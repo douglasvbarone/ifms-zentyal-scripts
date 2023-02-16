@@ -10,6 +10,9 @@ USERNAME=$1
 NAME=$2
 DEFAULT_QUOTA=256000 # 256MB
 
+# Extract surname
+LAST_NAME=$(echo $NAME | awk '{print $NF}')
+
 # Check if arguments are not empty
 if [ -z "$USERNAME" ] || [ -z "$NAME" ]; then
   echo "Usage: $0 <username> <name>"
@@ -30,11 +33,9 @@ if samba-tool user show $USERNAME >/dev/null 2>&1; then
   exit 1
 fi
 
-# Capitalize every first letter of $NAME
-
 # Create user
 echo "Creating user $USERNAME with name $NAME and password $USERNAME"
-samba-tool user create $USERNAME $USERNAME --userou='OU=Servidores,OU=IFMS-PP' --given-name="$NAME" --home-drive='H:' --home-directory="\\\\acadsrv.ACAD.PP.IFMS.EDU.BR\\$USERNAME" --use-username-as-cn --must-change-at-next-login
+samba-tool user create $USERNAME $USERNAME --userou='OU=Servidores,OU=IFMS-PP' --given-name="$NAME" --surname="$LAST_NAME" --home-drive='H:' --home-directory="\\\\acadsrv.ACAD.PP.IFMS.EDU.BR\\$USERNAME" --use-username-as-cn --must-change-at-next-login
 
 # Add user to group alunos
 echo "Adding user $USERNAME to group servidores"
