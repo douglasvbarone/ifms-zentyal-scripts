@@ -31,6 +31,6 @@ while IFS="" read -r p || [ -n "$p" ]; do
   fi
 
   echo "---"
-  ./pdc-add-user-professor.sh $USERNAME "$NAME"
+  ./pdc-add-user-servidor.sh $USERNAME "$NAME"
 
 done <$file

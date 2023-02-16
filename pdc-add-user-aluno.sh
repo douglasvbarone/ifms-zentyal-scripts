@@ -44,7 +44,7 @@ samba-tool group addmembers alunos $USERNAME
 echo "Creating home directory for user $USERNAME"
 mkdir /home/$USERNAME
 echo "Setting permissions for home directory"
-chmod 700 /home/$USERNAME/ -R
+chmod 711 /home/$USERNAME/ -R
 chown $USERNAME:'domain users' /home/$USERNAME/ -R
 
 # Set user quota
