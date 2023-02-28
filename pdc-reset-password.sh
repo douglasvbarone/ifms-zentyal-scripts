@@ -1,7 +1,8 @@
 #!/bin/bash
 
 USERNAME=$1
-PASSWORD=123456789
+DEFAULT_PASSWORD=123456789
+PASSWORD=${2:-$DEFAULT_PASSWORD}
 
 # Check if arguments are not empty
 if [ -z "$USERNAME" ]; then
