@@ -25,6 +25,12 @@ if [[ $USERNAME =~ " " ]]; then
   exit 1
 fi
 
+# Check if $USERNAME starts with a number
+if [[ $USERNAME =~ ^[0-9] ]]; then
+  echo "Username cannot start with a number. Appending 'u' to the beginning of the username..."
+  USERNAME="u$USERNAME"
+fi
+
 NAME=$(echo $NAME | tr "[A-Z]" "[a-z]" | sed -e "s/\b\(.\)/\u\1/g")
 
 # Check if $USERNAME is already in use
