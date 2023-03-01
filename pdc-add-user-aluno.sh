@@ -25,6 +25,12 @@ if [[ $USERNAME =~ " " ]]; then
   exit 1
 fi
 
+# Check if $USERNAME starts with a number
+if [[ $USERNAME =~ ^[0-9] ]]; then
+  echo "Username cannot start with a number. Appending 'u' to the beginning of the username..."
+  USERNAME="u$USERNAME"
+fi
+
 NAME=$(echo $NAME | tr "[A-Z]" "[a-z]" | sed -e "s/\b\(.\)/\u\1/g")
 
 # Check if $USERNAME is already in use
@@ -34,7 +40,7 @@ if samba-tool user show $USERNAME >/dev/null 2>&1; then
 fi
 
 # Create user
-echo "Creating user $USERNAME with display name $NAME, first name $FIRST_NAME, last name $LAST_NAME and password $USERNAME"
+echo "Creating user $USERNAME with display name $NAME, last name $LAST_NAME and password $USERNAME"
 samba-tool user create $USERNAME $USERNAME --userou='OU=Alunos,OU=IFMS-PP' --given-name="$NAME" --surname="$LAST_NAME" --home-drive='H:' --home-directory="\\\\acadsrv.ACAD.PP.IFMS.EDU.BR\\$USERNAME" --use-username-as-cn --must-change-at-next-login
 
 # Add user to group alunos
