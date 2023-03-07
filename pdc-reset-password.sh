@@ -10,6 +10,12 @@ if [ -z "$USERNAME" ]; then
   exit 1
 fi
 
+# Check if $USERNAME starts with a number
+if [[ $USERNAME =~ ^[0-9] ]]; then
+  echo "Username cannot start with a number. Appending 'u' to the beginning of the username..."
+  USERNAME="u$USERNAME"
+fi
+
 # Check if $USERNAME exists
 if ! samba-tool user show $USERNAME >/dev/null 2>&1; then
   echo "User $USERNAME do not exists"
