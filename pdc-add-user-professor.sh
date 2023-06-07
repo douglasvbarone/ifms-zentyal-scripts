@@ -6,6 +6,12 @@
 # For use with Zential Server #
 ###############################
 
+# Check if is running as root
+if [ "$(id -u)" != "0" ]; then
+  echo "This script must be run as root" 1>&2
+  exit 1
+fi
+
 USERNAME=$1
 NAME=$2
 DEFAULT_QUOTA=256000 # 256MB
